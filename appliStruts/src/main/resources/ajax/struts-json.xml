@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+
+    <package name="JsonPackage" namespace="/json" extends="json-default">
+
+        <action name="ajaxCheckDeuxiemeJoueur" class="actions.ajax.AjaxCheckDeuxiemeJoueur">
+
+            <result name="success" type="json">
+
+                <param name="excludeNullProperties">false</param>
+                <param name="includeProperties">pseudo2,sessionMap,joueurArefuser,applicationMap,pseudo</param>
+                <param name="excludeProperties">joueur,_</param>
+                <param name="noCache">false</param>
+
+            </result>
+
+        </action>
+
+        <action name="ajaxCheckCompositionJoueur" class="actions.ajax.AjaxCheckCompositionJoueurAction">
+
+            <result name="success" type="json">
+
+                <param name="excludeNullProperties">false</param>
+                <param name="includeProperties">lesCompositions,joueurAVerifier,sessionMap,applicationMap,compositionValide</param>
+                <param name="excludeProperties">joueur,_</param>
+                <param name="noCache">false</param>
+
+            </result>
+
+        </action>
+
+        <action name="ajaxCheckTour" class="actions.ajax.AjaxCheckTourAction">
+
+            <result name="success" type="json">
+
+                <param name="excludeNullProperties">false</param>
+                <param name="includeProperties">checkTour</param>
+                <param name="excludeProperties">joueur,_</param>
+                <param name="noCache">false</param>
+
+            </result>
+
+        </action>
+
+        <action name="ajaxCheckJoueurs" class="actions.ajax.AjaxListeJoueursConnectesAction">
+
+            <result name="success" type="json">
+                <param name="excludeProperties">applicationMap,sessionMap</param>
+            </result>
+
+        </action>
+
+        <action name="refuserInvitation" class="actions.partie.RefuserInvitationAction">
+
+            <result name="success" type="json">
+
+            </result>
+
+        </action>
+
+        <action name="ajaxcheckCoordonneesEclereur" class="actions.ajax.AjaxcheckCoordonneesEclereur">
+            <result name="success" type="json">
+                <param name="excludeNullProperties">false</param>
+                <param name="includeProperties">caseAccessible</param>
+                <param name="excludeProperties">joueur,_</param>
+                <param name="noCache">false</param>
+            </result>
+
+        </action>
+
+
+
+
+    </package>
+</struts>

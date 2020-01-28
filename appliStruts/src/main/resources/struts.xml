@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.custom.i18n.resources" value="ApplicationResources"/>
+    <constant name="struts.ui.theme" value="simple" />
+
+
+    <package name="default" namespace="/" extends="struts-default">
+
+
+        <interceptors>
+            <interceptor class="interceptors.LoginInterceptor" name="loginInterceptor">
+            </interceptor>
+            <interceptor-stack name="loginStack">
+                <interceptor-ref name="loginInterceptor"/>
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+            <interceptor-stack name="validationWorkflowStack"/>
+        </interceptors>
+
+        <default-interceptor-ref name="defaultStack"/>
+
+        <default-action-ref name="home"/>
+
+        <global-results>
+            <result name="login" type="redirectAction">
+                <param name="actionName">home</param>
+            </result>
+        </global-results>
+
+        <action name="index">
+            <result type="redirectAction">
+                <param name="actionName">Login</param>
+                <param name="namespace"> /WEB-INF/views/login.jsp</param>
+            </result>
+        </action>
+
+
+
+        <action name="home" class="actions.compte.LoginAction" method="home">
+
+            <interceptor-ref name="loginStack"/>
+
+            <result name="login">
+                /WEB-INF/views/compte/login.jsp
+            </result>
+            <result name="success">
+                /WEB-INF/views/salon/lobby.jsp
+            </result>
+            <result name="input">
+                /WEB-INF/views/compte/login.jsp
+            </result>
+
+        </action>
+
+
+        <action name="login" class="actions.compte.LoginAction" method="execute">
+            <result name="success" type="redirect">
+                home.action
+            </result>
+            <result name="login">
+                /WEB-INF/views/compte/login.jsp
+            </result>
+            <result name="input">
+                /WEB-INF/views/compte/login.jsp
+            </result>
+        </action>
+
+
+
+        <action name="Register" class="actions.compte.RegisterAction">
+            <result name="success">
+                /WEB-INF/views/compte/login.jsp
+            </result>
+            <result name="input">
+                /WEB-INF/views/compte/register.jsp
+            </result>
+        </action>
+
+        <action name="gotoRegister">
+            <result>
+                /WEB-INF/views/compte/register.jsp
+            </result>
+        </action>
+
+        <action name="gotoLogout" class="actions.compte.LogoutAction">
+            <result name="success">
+                /WEB-INF/views/compte/login.jsp
+            </result>
+        </action>
+
+        <action name="listePartieAjax" class="actions.ajax.AjaxListePartieAction">
+            <result>
+                /WEB-INF/views/salon/listePartiesAjax.jsp
+            </result>
+        </action>
+
+
+        <action name="creerPartiePublique" class="actions.partie.CreerPartiePubliqueAction">
+
+            <result>
+                /WEB-INF/views/salleAttente/salleAttenteJoueur.jsp
+            </result>
+        </action>
+
+        <action name="creerPartiePrivee" class="actions.partie.CreerPartiePriveeAction">
+            <result name="success">
+                /WEB-INF/views/salleAttente/salleAttenteJoueur.jsp
+            </result>
+        </action>
+
+        <action name="creationComposition" class="actions.composition.CreationCompositionAction">
+            <result>
+                /WEB-INF/views/salleAttente/SalleAttenteCompoPlacement.jsp
+            </result>
+        </action>
+
+
+        <action name="validationComposition" class="actions.composition.ValidationCompositionAction">
+            <result name="input">
+                /WEB-INF/views/salleAttente/salleAttenteComposition.jsp
+            </result>
+            <result>
+                /WEB-INF/views/partie/partieAttenteJoueur.jsp
+            </result>
+        </action>
+
+
+        <action name="rejoindrePartie" class="actions.partie.RejoindrePartieAction">
+            <result name="success">
+                /WEB-INF/views/salleAttente/salleAttenteJoueur.jsp
+            </result>
+            <result name="input">
+                /WEB-INF/views/salon/lobbyErreurRejoindrePartie.jsp
+            </result>
+            <result name="partieComplete" type="redirect">
+                    home.action
+            </result>
+
+        </action>
+
+        <action name="observerPartie" class="actions.partie.ObserverPartieAction">
+            <result name="success">
+                /WEB-INF/views/partie/partieEnObservation.jsp
+            </result>
+        </action>
+
+        <action name="listeJoueursConnectesAjax" class="actions.ajax.AjaxListeJoueursConnectesAction">
+            <result name="success">
+                /WEB-INF/views/salon/listeJoueursAjax.jsp
+            </result>
+        </action>
+
+        <action name="partieEnObservationAjax" class="actions.ajax.AjaxPartieEnObservationAction">
+            <result name="success">
+                /WEB-INF/views/partie/partieEnObservationAjax.jsp
+            </result>
+        </action>
+
+
+
+        <action name="partieEnCours">
+            <result name="success">
+                /WEB-INF/views/partie/partieEnCours.jsp
+            </result>
+        </action>
+
+        <action name="quitterPartie" class="actions.partie.QuitterPartieAction">
+            <result name="success">
+                /WEB-INF/views/salon/lobby.jsp
+            </result>
+        </action>
+
+
+        <action name="lesInvitationsAjax" class="actions.ajax.AjaxLesInvitationsAction">
+            <result name="success">
+                /WEB-INF/views/salon/lesInvitationsAjax.jsp
+            </result>
+        </action>
+
+        <action name="reponseInvitation" class="actions.partie.RefuserInvitationAction">
+            <result name="accepter">
+                /WEB-INF/views/salleAttente/salleAttenteJoueur.jsp
+            </result>
+            <result name="refuser">
+                /WEB-INF/views/salon/lobby.jsp
+            </result>
+        </action>
+
+        <action name="demarrerJeu" class="actions.jeu.InitialisationJeuAction">
+            <result type="redirect">
+                jeuEnCours.action
+            </result>
+        </action>
+
+        <action name="jeuEnCours" class="actions.jeu.JeuEnCoursAction">
+            <result name="success">
+                /WEB-INF/views/partie/partieEnCours.jsp
+            </result>
+            <result name="attente">
+                /WEB-INF/views/partie/partieEnCoursAttente.jsp
+            </result>
+            <result name="victoire">
+                /WEB-INF/views/partie/victoire.jsp
+            </result>
+            <result name="defaite">
+                /WEB-INF/views/partie/defaite.jsp
+            </result>
+        </action>
+
+        <action name="deplacementJeu" class="actions.jeu.DeplacementJeuAction">
+            <result type="redirect">
+                jeuEnCours.action
+            </result>
+        </action>
+
+        <action name="changerTour" class="actions.jeu.ChangerTourAction">
+            <result type="redirect">
+                jeuEnCours.action
+            </result>
+        </action>
+
+
+    </package>
+
+
+    <include file="ajax/struts-json.xml"/>
+
+
+</struts>

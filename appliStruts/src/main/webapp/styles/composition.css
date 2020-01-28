@@ -1,0 +1,17 @@
+h2 {
+    text-align: center;
+}
+
+#j1 {
+    text-align: center;
+    background-color: #008080;
+    border: solid 1px rgb(211,211,211);
+    margin-right: 3px; height:150px;
+}
+
+#j2 {
+    text-align: center;
+    background-color: #008080;
+    border: solid 1px rgb(211,211,211);
+    height: 150px;
+}
